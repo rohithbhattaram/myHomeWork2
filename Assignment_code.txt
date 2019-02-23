@@ -1,0 +1,65 @@
+Sub Wall_street_stock()
+
+'Login to Loop across the sheets in excel'
+For y = 1 To Application.Sheets.Count
+
+Dim Name As String
+Name = ActiveWorkbook.Worksheets(y).Name
+Worksheets(Name).Activate
+
+
+Dim Col As Integer
+Col = 1
+Dim Coln As Integer
+Coln = 9
+
+Dim p As Double
+p = 0
+
+
+'Insert Column Names in each sheet'
+
+Range("I1").Value = "Ticker"
+Range("J1").Value = "Total Stock Volume"
+
+
+'Create a unique values for Ticker'
+
+Dim n As Integer
+n = 2
+For i = 2 To Cells(Rows.Count, "A").End(xlUp).Row
+ 
+    If Cells(i, Col).Value <> Cells(i + 1, Col).Value Then
+       Cells(n, 9) = Cells(i, Col).Value
+       n = n + 1
+    End If
+    Next i
+
+
+'Summation of stock against each Ticker'
+'Logic : Comparing sublist against MainList  and for matched values - pick sum of stocks and place against Ticker'
+
+
+
+For i = 2 To Cells(Rows.Count, "I").End(xlUp).Row
+    For j = 2 To Cells(Rows.Count, "A").End(xlUp).Row
+   
+    If Cells(i, Coln).Value = Cells(j, Col).Value Then
+        p = p + Cells(j, 7).Value
+         
+    End If
+       
+    Next j
+    Cells(i, 10).Value = p
+
+      p = 0
+        
+    
+    Next i
+    
+    
+Next y
+
+
+End Sub
+
